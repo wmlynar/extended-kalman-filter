@@ -4,4 +4,13 @@
   <artifactId>extended-kalman-filter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Extended Kalman Filter</name>
+	<dependencies>
+		<!-- testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
