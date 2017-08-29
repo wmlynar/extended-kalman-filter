@@ -11,7 +11,7 @@ import com.github.wmlynar.ekf.examples.SpeedAngleProcessModel;
 import com.github.wmlynar.ekf.examples.Linear1dObservationModel;
 import com.github.wmlynar.ekf.examples.Linear1dProcessModel;
 
-public class AngleModelTest {
+public class AngleSpeedModelTest {
 
 	@Before
 	public void setUp() throws Exception {
