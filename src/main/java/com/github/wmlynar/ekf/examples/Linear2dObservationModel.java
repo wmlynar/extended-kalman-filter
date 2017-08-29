@@ -4,12 +4,12 @@ import com.github.wmlynar.ekf.ObservationModel;
 
 public class Linear2dObservationModel extends ObservationModel {
 
-	private double x;
-	private double y;
+	private double mx;
+	private double my;
 	
 	public void setPosition(double x, double y) {
-		this.x = x;
-		this.y = y;
+		this.mx = x;
+		this.my = y;
 	}
 	
 	@Override
@@ -23,9 +23,9 @@ public class Linear2dObservationModel extends ObservationModel {
 	}
 
 	@Override
-	public void observationMeasurement(double[][] z) {
-		z[0][0] = x;
-		z[1][0] = y;
+	public void observationMeasurement(double[][] y) {
+		y[0][0] = mx;
+		y[1][0] = my;
 	}
 
 	@Override

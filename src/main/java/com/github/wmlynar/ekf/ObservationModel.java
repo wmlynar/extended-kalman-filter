@@ -27,7 +27,7 @@ public abstract class ObservationModel {
 	
 	public abstract int stateDimension();
 	public abstract int observationDimension();
-	public abstract void observationMeasurement(double[][] z);
+	public abstract void observationMeasurement(double[][] y);
 	public abstract void observationModel(double[][] x, double[][] h);
 	public abstract void observationModelJacobian(double[][] j);
 	public abstract void observationNoiseCovariance(double[][] cov);
