@@ -32,7 +32,7 @@ In this simple example functions f and h are linear. Nevertheless the library is
 
 In code this is achieved by subclassing StateModel and ObservationModel. They are beaing separated in order to provide ability to fuse different kind of observations.
 
-Below is Java implementation of above formulas of the state equation
+Below is Java implementation of above formulas of the state equation. As you can see one only needs to provide non-zero values:
 
 ```
 public class Linear1dProcessModel extends ProcessModel {
@@ -51,22 +51,30 @@ public class Linear1dProcessModel extends ProcessModel {
 	@Override
 	public void initialStateCovariance(double[][] cov) {
 		cov[0][0] = 1000;
+		cov[0][1] = 0;
+		cov[1][0] = 0;
 		cov[1][1] = 1000;
 	}
 
 	@Override
 	public void stateFunction(double[][] x, double[][] f) {
 		f[0][0] = x[1][0];
+		f[1][0] = 0;
 	}
 
 	@Override
 	public void stateFunctionJacobian(double[][] x, double[][] j) {
+		j[0][0] = 0;
 		j[0][1] = 1;
+		j[1][0] = 0;
+		j[1][1] = 0;
 	}
 
 	@Override
 	public void processNoiseCovariance(double[][] cov) {
 		cov[0][0] = 1;
+		cov[0][1] = 0;
+		cov[1][0] = 0;
 		cov[1][1] = 1;
 	}
 }
