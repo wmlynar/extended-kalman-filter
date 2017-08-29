@@ -13,13 +13,13 @@ public class SpeedAngleObservationModel extends ObservationModel {
 	}
 	
 	@Override
-	public int stateDimension() {
-		return 4;
+	public int observationDimension() {
+		return 2;
 	}
 
 	@Override
-	public int observationDimension() {
-		return 2;
+	public int stateDimension() {
+		return 4;
 	}
 
 	@Override

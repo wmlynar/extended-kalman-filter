@@ -25,8 +25,8 @@ public abstract class ObservationModel {
 	/* This group is used for meaningless intermediate calculations */
 	public Matrix vertical_scratch = new Matrix(stateDimension(), observationDimension());
 	
-	public abstract int stateDimension();
 	public abstract int observationDimension();
+	public abstract int stateDimension();
 	public abstract void observationMeasurement(double[][] y);
 	public abstract void observationModel(double[][] x, double[][] h);
 	public abstract void observationModelJacobian(double[][] j);
