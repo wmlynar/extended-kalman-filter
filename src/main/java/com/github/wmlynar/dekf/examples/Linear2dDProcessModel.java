@@ -1,6 +1,5 @@
 package com.github.wmlynar.dekf.examples;
 
-import com.github.wmlynar.ctekf.CtProcessModel;
 import com.github.wmlynar.dekf.DProcessModel;
 import com.github.wmlynar.ekf.Matrix;
 

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.wmlynar.ctekf.CtKalmanFilter;
 import com.github.wmlynar.dekf.DKalmanFilter;
 
 public class Linear2dDModelTest {

@@ -1,6 +1,5 @@
 package com.github.wmlynar.dekf.examples;
 
-import com.github.wmlynar.ctekf.CtObservationModel;
 import com.github.wmlynar.dekf.DObservationModel;
 import com.github.wmlynar.ekf.Matrix;
 
