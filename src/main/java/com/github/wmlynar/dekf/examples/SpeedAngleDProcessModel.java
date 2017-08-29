@@ -26,7 +26,7 @@ public class SpeedAngleDProcessModel extends DProcessModel {
 	}
 
 	@Override
-	public void predictionModel(Matrix state, Matrix state_delta) {
+	public void stateFunction(Matrix state, Matrix state_delta) {
 		state_delta.data[0][0] = state.data[2][0] * Math.sin(state.data[3][0]);
 		state_delta.data[1][0] = state.data[2][0] * Math.cos(state.data[3][0]);
 		state_delta.data[2][0] = 0;
@@ -34,7 +34,7 @@ public class SpeedAngleDProcessModel extends DProcessModel {
 	}
 
 	@Override
-	public void predictionModelJacobian(Matrix state, Matrix state_delta_jacobian) {
+	public void stateFunctionJacobian(Matrix state, Matrix state_delta_jacobian) {
 		state_delta_jacobian.data[0][2] = Math.sin(state.data[3][0]);
 		state_delta_jacobian.data[0][3] = state.data[2][0] * Math.cos(state.data[3][0]);
 		state_delta_jacobian.data[1][2] = Math.cos(state.data[3][0]);

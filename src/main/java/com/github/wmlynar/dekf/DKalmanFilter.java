@@ -47,11 +47,11 @@ public class DKalmanFilter {
 	/* Just the prediction phase of update. */
 	public void predict(double dt) {
 		/* Predict the state */
-		model.predictionModel(model.state_estimate, model.delta_vector_scratch);
+		model.stateFunction(model.state_estimate, model.delta_vector_scratch);
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
 		
 		/* Predict the state estimate covariance */
-		model.predictionModelJacobian(model.state_estimate, model.delta_matrix_scratch);
+		model.stateFunctionJacobian(model.state_estimate, model.delta_matrix_scratch);
 		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
 		model.processNoiseCovariance(model.process_noise_covariance);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
@@ -63,13 +63,13 @@ public class DKalmanFilter {
 		// runge-kutta 2 (explicit midpoint method)
 		
 		/* Predict the state */
-		model.predictionModel(model.state_estimate, model.delta_vector_scratch);
+		model.stateFunction(model.state_estimate, model.delta_vector_scratch);
 		Matrix.add_scaled_matrix(model.state_estimate, dt/2, model.delta_vector_scratch, model.predicted_state_midpoint);
-		model.predictionModel(model.predicted_state_midpoint, model.delta_vector_scratch);
+		model.stateFunction(model.predicted_state_midpoint, model.delta_vector_scratch);
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
 
 		/* Predict the state estimate covariance */
-		model.predictionModelJacobian(model.predicted_state_midpoint, model.delta_matrix_scratch);
+		model.stateFunctionJacobian(model.predicted_state_midpoint, model.delta_matrix_scratch);
 		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
 		model.processNoiseCovariance(model.process_noise_covariance);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);

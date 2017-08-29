@@ -23,13 +23,13 @@ public class Linear1dDProcessModel extends DProcessModel {
 	}
 
 	@Override
-	public void predictionModel(Matrix state, Matrix state_delta) {
-		state_delta.data[0][0] = state.data[1][0];
+	public void stateFunction(Matrix state, Matrix function) {
+		function.data[0][0] = state.data[1][0];
 	}
 
 	@Override
-	public void predictionModelJacobian(Matrix state, Matrix state_delta_jacobian) {
-		state_delta_jacobian.data[0][1] = 1;
+	public void stateFunctionJacobian(Matrix state, Matrix function_jacobian) {
+		function_jacobian.data[0][1] = 1;
 	}
 
 	@Override

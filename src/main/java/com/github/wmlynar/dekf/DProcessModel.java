@@ -30,8 +30,8 @@ public abstract class DProcessModel {
 	public abstract int stateDimension();
 	public abstract void initialState(Matrix initial_state);
 	public abstract void initialStateCovariance(Matrix initial_covariance);
-	public abstract void predictionModel(Matrix state, Matrix state_delta);
-	public abstract void predictionModelJacobian(Matrix state, Matrix state_delta_jacobian);
+	public abstract void stateFunction(Matrix state, Matrix function);
+	public abstract void stateFunctionJacobian(Matrix state, Matrix function_jacobian);
 	public abstract void processNoiseCovariance(Matrix process_noise_covariance);
 }
 
