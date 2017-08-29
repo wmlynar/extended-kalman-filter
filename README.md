@@ -92,13 +92,13 @@ public class Linear1dObservationModel extends ObservationModel {
 	}
 	
 	@Override
-	public int stateDimension() {
-		return 2;
+	public int observationDimension() {
+		return 1;
 	}
 
 	@Override
-	public int observationDimension() {
-		return 1;
+	public int stateDimension() {
+		return 2;
 	}
 
 	@Override
