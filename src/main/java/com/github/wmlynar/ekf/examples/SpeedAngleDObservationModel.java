@@ -1,6 +1,6 @@
-package com.github.wmlynar.dekf.examples;
+package com.github.wmlynar.ekf.examples;
 
-import com.github.wmlynar.dekf.DObservationModel;
+import com.github.wmlynar.ekf.DObservationModel;
 import com.github.wmlynar.ekf.Matrix;
 
 public class SpeedAngleDObservationModel extends DObservationModel {

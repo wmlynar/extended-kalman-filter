@@ -1,9 +1,9 @@
-package com.github.wmlynar.ctekf.examples;
+package com.github.wmlynar.ekf.examples;
 
-import com.github.wmlynar.ctekf.CtObservationModel;
+import com.github.wmlynar.ekf.DObservationModel;
 import com.github.wmlynar.ekf.Matrix;
 
-public class Linear2dCtObservationModel extends CtObservationModel {
+public class Linear2dDObservationModel extends DObservationModel {
 
 	private double x;
 	private double y;

@@ -11,15 +11,17 @@ package com.github.wmlynar.ekf;
  Vectors are handled as n-by-1 matrices.
  TODO: comment on the dimension of the matrices */
 
-public class KalmanFilter {
+public class DKalmanFilter {
 
-	public ProcessModel model;
+	public DProcessModel model;
 
-	public KalmanFilter(ProcessModel model) {
+	public DKalmanFilter(DProcessModel model) {
 		this.model = model;
 		
 		model.initialState(model.state_estimate);
 		model.initialStateCovariance(model.estimate_covariance);
+		
+		model.identity_scratch.set_identity_matrix();
 	}
 
 	/*
@@ -35,7 +37,7 @@ public class KalmanFilter {
 	 * It is also advisable to initialize with reasonable guesses for
 	 * f.state_estimate f.estimate_covariance
 	 */
-	public void update(double dt, ObservationModel obs) {
+	public void update(double dt, DObservationModel obs) {
 		predict(dt);
 		estimate(dt, obs);
 	}
@@ -43,18 +45,38 @@ public class KalmanFilter {
 	/* Just the prediction phase of update. */
 	public void predict(double dt) {
 		/* Predict the state */
-		model.predictionModel(model.state_estimate, dt, model.predicted_state);
+		model.stateFunction(model.state_estimate, model.delta_vector_scratch);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
 		
 		/* Predict the state estimate covariance */
-		model.predictionModelJacobian(model.state_estimate, dt, model.state_transition);
-		model.processNoiseCovariance(dt, model.process_noise_covariance);
+		model.stateFunctionJacobian(model.state_estimate, model.delta_matrix_scratch);
+		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
+		model.processNoiseCovariance(model.process_noise_covariance);
+		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
+		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
+		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
+	}
+	
+	public void predict_rk2(double dt) {
+		// runge-kutta 2 (explicit midpoint method)
+		
+		/* Predict the state */
+		model.stateFunction(model.state_estimate, model.delta_vector_scratch);
+		Matrix.add_scaled_matrix(model.state_estimate, dt/2, model.delta_vector_scratch, model.predicted_state_midpoint);
+		model.stateFunction(model.predicted_state_midpoint, model.delta_vector_scratch);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
+
+		/* Predict the state estimate covariance */
+		model.stateFunctionJacobian(model.predicted_state_midpoint, model.delta_matrix_scratch);
+		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
+		model.processNoiseCovariance(model.process_noise_covariance);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
 	}
 
 	/* Just the estimation phase of update. */
-	void estimate(double dt, ObservationModel obs) {
+	void estimate(double dt, DObservationModel obs) {
 		/* Calculate innovation */
 		obs.observationMeasurement(obs.observation);
 		obs.observationModel(model.predicted_state, obs.innovation);
@@ -65,7 +87,7 @@ public class KalmanFilter {
 		obs.observationNoiseCovariance(obs.observation_noise_covariance);
 		Matrix.multiply_by_transpose_matrix(model.predicted_estimate_covariance, obs.observation_model, obs.vertical_scratch);
 		Matrix.multiply_matrix(obs.observation_model, obs.vertical_scratch, obs.innovation_covariance);
-		Matrix.add_matrix(obs.innovation_covariance, obs.observation_noise_covariance, obs.innovation_covariance);
+		Matrix.add_scaled_matrix(obs.innovation_covariance, dt, obs.observation_noise_covariance, obs.innovation_covariance);
 
 		/*
 		 * Invert the innovation covariance. Note: this destroys the innovation

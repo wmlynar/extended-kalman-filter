@@ -1,9 +1,9 @@
-package com.github.wmlynar.ctekf.examples;
+package com.github.wmlynar.ekf.examples;
 
-import com.github.wmlynar.ctekf.CtProcessModel;
+import com.github.wmlynar.ekf.DProcessModel;
 import com.github.wmlynar.ekf.Matrix;
 
-public class Linear1dCtProcessModel extends CtProcessModel {
+public class Linear1dDProcessModel extends DProcessModel {
 
 	@Override
 	public int stateDimension() {
@@ -23,17 +23,13 @@ public class Linear1dCtProcessModel extends CtProcessModel {
 	}
 
 	@Override
-	public void stateFunction(Matrix state, Matrix derivative) {
-		derivative.data[0][0] = state.data[1][0];
-		derivative.data[1][0] = 0;
+	public void stateFunction(Matrix state, Matrix function) {
+		function.data[0][0] = state.data[1][0];
 	}
 
 	@Override
-	public void stateFunctionJacobian(Matrix state, Matrix derivative_jacobian) {
-		derivative_jacobian.data[0][0] = 0;
-		derivative_jacobian.data[0][1] = 1;
-		derivative_jacobian.data[1][0] = 0;
-		derivative_jacobian.data[1][1] = 0;
+	public void stateFunctionJacobian(Matrix state, Matrix function_jacobian) {
+		function_jacobian.data[0][1] = 1;
 	}
 
 	@Override

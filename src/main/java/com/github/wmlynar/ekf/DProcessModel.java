@@ -1,6 +1,4 @@
-package com.github.wmlynar.dekf;
-
-import com.github.wmlynar.ekf.Matrix;
+package com.github.wmlynar.ekf;
 
 public abstract class DProcessModel {
 	

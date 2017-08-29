@@ -1,11 +1,13 @@
-package com.github.wmlynar.dekf.examples;
+package com.github.wmlynar.ekf.examples;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.wmlynar.dekf.DKalmanFilter;
+import com.github.wmlynar.ekf.DKalmanFilter;
+import com.github.wmlynar.ekf.examples.Linear1dDObservationModel;
+import com.github.wmlynar.ekf.examples.Linear1dDProcessModel;
 
 public class Linear1dDModelTest {
 
