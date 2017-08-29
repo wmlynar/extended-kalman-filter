@@ -19,6 +19,7 @@ public class Linear1dProcessModel extends ProcessModel {
 	@Override
 	public void initialStateCovariance(double[][] cov) {
 		cov[0][0] = 1000;
+		cov[1][1] = 1000;
 	}
 
 	@Override
