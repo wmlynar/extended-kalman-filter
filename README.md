@@ -76,7 +76,7 @@ where in our example we are observing position so h is defined as
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bh%7D%3D%5Cleft%5Bx%5Cright%5D)
 
-Jacobian of ha function is computed as
+Jacobian of function h is computed as
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bh%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D1%260%5Cend%7Barray%7D%5Cright%5D)
 
@@ -85,10 +85,10 @@ Above formulas are implemented in Java by subclassing the ObservationModel:
 ```
 public class Linear1dObservationModel extends ObservationModel {
 
-	private double x;
+	private double mx;
 	
 	public void setPosition(double x) {
-		this.x = x;
+		this.mx = x;
 	}
 	
 	@Override
@@ -102,8 +102,8 @@ public class Linear1dObservationModel extends ObservationModel {
 	}
 
 	@Override
-	public void observationMeasurement(double[][] z) {
-		z[0][0] = x;
+	public void observationMeasurement(double[][] y) {
+		y[0][0] = mx;
 	}
 
 	@Override
