@@ -33,11 +33,11 @@ public class Linear1dObservationModel extends ObservationModel {
 	@Override
 	public void observationModelJacobian(double[][] j) {
 		j[0][0] = 1;
+		j[0][1] = 0;
 	}
 
 	@Override
 	public void observationNoiseCovariance(double[][] cov) {
 		cov[0][0] = 1;
 	}
-
 }
