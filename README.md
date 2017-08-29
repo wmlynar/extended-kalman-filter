@@ -15,7 +15,6 @@ where state vector x and system function f are defined as
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bf%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bc%7Dv%5C%5C0%5Cend%7Barray%7D%5Cright%5D)
 
-
 Observation equation is defined as follows
 
 ![equation](https://latex.codecogs.com/gif.latex?\mathbf{y=h(x)})
@@ -32,7 +31,7 @@ In this simple example functions f and h are linear. Nevertheless the library is
 
 In code this is achieved by subclassing StateModel and ObservationModel. They are beaing separated in order to provide ability to fuse different kind of observations.
 
-Below is Java implementation of above formulas of the state equation. As you can see one only needs to provide non-zero values:
+Below is Java implementation of above formulas of the state equation:
 
 ```
 public class Linear1dProcessModel extends ProcessModel {
@@ -76,6 +75,51 @@ public class Linear1dProcessModel extends ProcessModel {
 		cov[0][1] = 0;
 		cov[1][0] = 0;
 		cov[1][1] = 1;
+	}
+}
+
+```
+
+Below is Java implementation of above formulas of the observation equation:
+
+```
+public class Linear1dObservationModel extends ObservationModel {
+
+	private double x;
+	
+	public void setPosition(double x) {
+		this.x = x;
+	}
+	
+	@Override
+	public int stateDimension() {
+		return 2;
+	}
+
+	@Override
+	public int observationDimension() {
+		return 1;
+	}
+
+	@Override
+	public void observationMeasurement(double[][] z) {
+		z[0][0] = x;
+	}
+
+	@Override
+	public void observationModel(double[][] x, double[][] h) {
+		h[0][0] = x[0][0];
+	}
+
+	@Override
+	public void observationModelJacobian(double[][] j) {
+		j[0][0] = 1;
+		j[0][1] = 0;
+	}
+
+	@Override
+	public void observationNoiseCovariance(double[][] cov) {
+		cov[0][0] = 1;
 	}
 }
 
