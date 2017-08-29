@@ -11,7 +11,7 @@ State equation is defined as follows
 
 where state vector x and system function f are defined as
 
-![equation](https://latex.codecogs.com/gif.latex?\mathbf{x=}\left[\begin{array}{c}x\\v\end{array}\right])
+![equation](https://latex.codecogs.com/gif.latex?\mathbf{f}=\left[\begin{array}{c}v\\0\end{array}\right])
 
 Observation equation is defined as follows
 
@@ -19,5 +19,5 @@ Observation equation is defined as follows
 
 where in our example we are observing position so h is defined as
 
-![equation](https://latex.codecogs.com/gif.latex?\mathbf{y=h(x)})
+![equation](https://latex.codecogs.com/gif.latex?\mathbf{h}=\left[ x\right])
 
