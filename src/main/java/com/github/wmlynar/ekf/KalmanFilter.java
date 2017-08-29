@@ -13,6 +13,7 @@ package com.github.wmlynar.ekf;
 
 public class KalmanFilter {
 
+	public double time = 0;
 	public ProcessModel model;
 
 	public KalmanFilter(ProcessModel model) {
@@ -37,7 +38,9 @@ public class KalmanFilter {
 	 * It is also advisable to initialize with reasonable guesses for
 	 * f.state_estimate f.estimate_covariance
 	 */
-	public void update(double dt, ObservationModel obs) {
+	public void update(double t, ObservationModel obs) {
+		double dt = t - time;
+		time = t;
 		predict(dt);
 		estimate(dt, obs);
 	}

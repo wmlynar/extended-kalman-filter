@@ -20,8 +20,9 @@ public class Linear2dModelTest {
 		KalmanFilter filter = new KalmanFilter(model);
 		
         for (int i = 0; i <= 10; ++i) {
+        	double time = i;
         	obs.setPosition(i,i);
-            filter.update(1,obs);
+            filter.update(i,obs);
         }
         
         double x = filter.model.state_estimate.data[0][0];
