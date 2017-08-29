@@ -11,11 +11,11 @@ package com.github.wmlynar.ekf;
  Vectors are handled as n-by-1 matrices.
  TODO: comment on the dimension of the matrices */
 
-public class DKalmanFilter {
+public class KalmanFilter {
 
-	public DProcessModel model;
+	public ProcessModel model;
 
-	public DKalmanFilter(DProcessModel model) {
+	public KalmanFilter(ProcessModel model) {
 		this.model = model;
 		
 		model.initialState(model.state_estimate);
@@ -37,7 +37,7 @@ public class DKalmanFilter {
 	 * It is also advisable to initialize with reasonable guesses for
 	 * f.state_estimate f.estimate_covariance
 	 */
-	public void update(double dt, DObservationModel obs) {
+	public void update(double dt, ObservationModel obs) {
 		predict(dt);
 		estimate(dt, obs);
 	}
@@ -76,7 +76,7 @@ public class DKalmanFilter {
 	}
 
 	/* Just the estimation phase of update. */
-	void estimate(double dt, DObservationModel obs) {
+	void estimate(double dt, ObservationModel obs) {
 		/* Calculate innovation */
 		obs.observationMeasurement(obs.observation);
 		obs.observationModel(model.predicted_state, obs.innovation);

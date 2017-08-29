@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.wmlynar.ekf.DKalmanFilter;
-import com.github.wmlynar.ekf.examples.Linear1dDObservationModel;
-import com.github.wmlynar.ekf.examples.Linear1dDProcessModel;
+import com.github.wmlynar.ekf.KalmanFilter;
+import com.github.wmlynar.ekf.examples.Linear1dObservationModel;
+import com.github.wmlynar.ekf.examples.Linear1dProcessModel;
 
-public class Linear1dDModelTest {
+public class Linear1dModelTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -17,9 +17,9 @@ public class Linear1dDModelTest {
 
 	@Test
 	public void test() {
-		Linear1dDProcessModel model = new Linear1dDProcessModel();
-		Linear1dDObservationModel obs = new Linear1dDObservationModel();
-		DKalmanFilter filter = new DKalmanFilter(model);
+		Linear1dProcessModel model = new Linear1dProcessModel();
+		Linear1dObservationModel obs = new Linear1dObservationModel();
+		KalmanFilter filter = new KalmanFilter(model);
 		
         for (int i = 0; i <= 10; ++i) {
         	obs.setPosition(i);

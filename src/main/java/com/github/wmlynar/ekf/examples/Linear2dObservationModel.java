@@ -1,9 +1,9 @@
 package com.github.wmlynar.ekf.examples;
 
-import com.github.wmlynar.ekf.DObservationModel;
+import com.github.wmlynar.ekf.ObservationModel;
 import com.github.wmlynar.ekf.Matrix;
 
-public class Linear2dDObservationModel extends DObservationModel {
+public class Linear2dObservationModel extends ObservationModel {
 
 	private double x;
 	private double y;

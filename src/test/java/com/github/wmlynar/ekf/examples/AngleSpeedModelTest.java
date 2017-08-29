@@ -5,11 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.wmlynar.ekf.DKalmanFilter;
-import com.github.wmlynar.ekf.examples.SpeedAngleDObservationModel;
-import com.github.wmlynar.ekf.examples.SpeedAngleDProcessModel;
+import com.github.wmlynar.ekf.KalmanFilter;
+import com.github.wmlynar.ekf.examples.SpeedAngleObservationModel;
+import com.github.wmlynar.ekf.examples.SpeedAngleProcessModel;
 
-public class AngleSpeedDModelTest {
+public class AngleSpeedModelTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -17,9 +17,9 @@ public class AngleSpeedDModelTest {
 
 	@Test
 	public void test() {
-		SpeedAngleDProcessModel model = new SpeedAngleDProcessModel();
-		SpeedAngleDObservationModel obs = new SpeedAngleDObservationModel();
-		DKalmanFilter filter = new DKalmanFilter(model);
+		SpeedAngleProcessModel model = new SpeedAngleProcessModel();
+		SpeedAngleObservationModel obs = new SpeedAngleObservationModel();
+		KalmanFilter filter = new KalmanFilter(model);
 		
         for (int i = 0; i <= 10; ++i) {
         	obs.setPosition(i,i);

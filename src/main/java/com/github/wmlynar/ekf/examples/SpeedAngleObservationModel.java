@@ -1,9 +1,9 @@
 package com.github.wmlynar.ekf.examples;
 
-import com.github.wmlynar.ekf.DObservationModel;
+import com.github.wmlynar.ekf.ObservationModel;
 import com.github.wmlynar.ekf.Matrix;
 
-public class SpeedAngleDObservationModel extends DObservationModel {
+public class SpeedAngleObservationModel extends ObservationModel {
 
 	private double x;
 	private double y;

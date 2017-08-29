@@ -1,6 +1,6 @@
 package com.github.wmlynar.ekf;
 
-public abstract class DProcessModel {
+public abstract class ProcessModel {
 	
 	/* This group of matrices must be specified by the user. */
 	/* F_k */

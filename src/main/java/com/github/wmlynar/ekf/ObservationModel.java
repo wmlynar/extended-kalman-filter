@@ -1,6 +1,6 @@
 package com.github.wmlynar.ekf;
 
-public abstract class DObservationModel {
+public abstract class ObservationModel {
 
 	/* This group of matrices must be specified by the user. */
 	/* H_k */

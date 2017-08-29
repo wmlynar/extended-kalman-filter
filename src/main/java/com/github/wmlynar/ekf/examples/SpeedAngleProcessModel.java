@@ -1,9 +1,9 @@
 package com.github.wmlynar.ekf.examples;
 
-import com.github.wmlynar.ekf.DProcessModel;
+import com.github.wmlynar.ekf.ProcessModel;
 import com.github.wmlynar.ekf.Matrix;
 
-public class SpeedAngleDProcessModel extends DProcessModel {
+public class SpeedAngleProcessModel extends ProcessModel {
 
 	@Override
 	public int stateDimension() {
