@@ -15,23 +15,11 @@ where state vector x and system function f are defined as
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bf%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bc%7Dv%5C%5C0%5Cend%7Barray%7D%5Cright%5D)
 
-Observation equation is defined as follows
-
-![equation](https://latex.codecogs.com/gif.latex?\mathbf{y=h(x)})
-
-where in our example we are observing position so h is defined as
-
-![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bh%7D%3D%5Cleft%5Bx%5Cright%5D)
-
-In this simple example functions f and h are linear. Nevertheless the library is written for general non-linear case. That is why we need to provide jacobians of f and h functions
+In this simple example function f is linear. Nevertheless the library is written for general non-linear Extended Kalman Filter case. That is why we need to provide jacobian of f
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bf%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D0%261%5C%5C0%260%5Cend%7Barray%7D%5Cright%5D)
 
-![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bh%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D1%260%5Cend%7Barray%7D%5Cright%5D)
-
-In code this is achieved by subclassing StateModel and ObservationModel. They are beaing separated in order to provide ability to fuse different kind of observations.
-
-Below is Java implementation of above formulas of the state equation:
+In Java the above formulas can be provided by subclassing the ProcessModel class:
 
 ```
 public class Linear1dProcessModel extends ProcessModel {
@@ -80,7 +68,19 @@ public class Linear1dProcessModel extends ProcessModel {
 
 ```
 
-Below is Java implementation of above formulas of the observation equation:
+Observation equation is defined as follows
+
+![equation](https://latex.codecogs.com/gif.latex?\mathbf{y=h(x)})
+
+where in our example we are observing position so h is defined as
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bh%7D%3D%5Cleft%5Bx%5Cright%5D)
+
+Jacobian of ha function is computed as
+
+![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bh%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D1%260%5Cend%7Barray%7D%5Cright%5D)
+
+Above formulas are implemented in Java by subclassing the ObservationModel:
 
 ```
 public class Linear1dObservationModel extends ObservationModel {
