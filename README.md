@@ -7,5 +7,5 @@ Let's start with simple example of object moving in one dimension. Object has po
 
 State equation is defined by state vector x and function f
 
-![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7Bd%7D%7Bdt%7D%5Cmathbf%7Bx%3Df%28x%29%7D)  
+![equation](https://latex.codecogs.com/gif.latex?\frac{d}{dt}\mathbf{x=f(x)})  
 
