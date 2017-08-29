@@ -11,7 +11,7 @@ State equation is defined as follows
 
 where state vector x and system function f are defined as
 
-![equation](https://latex.codecogs.com/gif.latex?\mathbf{f}=\left[\begin{array}{c}v\\0\end{array}\right])
+![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bf%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bc%7Dv%5C%5C0%5Cend%7Barray%7D%5Cright%5D)
 
 Observation equation is defined as follows
 
