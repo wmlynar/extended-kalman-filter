@@ -23,12 +23,14 @@ public abstract class DProcessModel {
 	/* This group is used for meaningless intermediate calculations */
 	public Matrix big_square_scratch = new Matrix(stateDimension(), stateDimension());
 	public Matrix identity_scratch = new Matrix(stateDimension(), stateDimension());
+	public Matrix delta_vector_scratch = new Matrix(stateDimension(), 1);
+	public Matrix delta_matrix_scratch = new Matrix(stateDimension(), stateDimension());
 	
 	public abstract int stateDimension();
 	public abstract void initialState(Matrix initial_state);
 	public abstract void initialStateCovariance(Matrix initial_covariance);
-	public abstract void predictionModel(Matrix state, double dt, Matrix state_delta);
-	public abstract void predictionModelJacobian(Matrix state, double dt, Matrix state_delta_jacobian);
-	public abstract void processNoiseCovariance(double dt, Matrix process_noise_covariance);
+	public abstract void predictionModel(Matrix state, Matrix state_delta);
+	public abstract void predictionModelJacobian(Matrix state, Matrix state_delta_jacobian);
+	public abstract void processNoiseCovariance(Matrix process_noise_covariance);
 }
 

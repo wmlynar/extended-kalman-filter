@@ -289,4 +289,17 @@ public class Matrix {
 			}
 		}
 	}
+	
+	public static void add_scaled_matrix(Matrix a, double s, Matrix b, Matrix c) {
+		assert (a.rows == b.rows);
+		assert (a.rows == c.rows);
+		assert (a.cols == b.cols);
+		assert (a.cols == c.cols);
+		for (int i = 0; i < a.rows; ++i) {
+			for (int j = 0; j < a.cols; ++j) {
+				c.data[i][j] = a.data[i][j] + s * b.data[i][j];
+			}
+		}
+	}
+
 }

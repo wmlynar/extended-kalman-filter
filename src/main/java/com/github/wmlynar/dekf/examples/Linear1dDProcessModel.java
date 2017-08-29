@@ -23,18 +23,18 @@ public class Linear1dDProcessModel extends DProcessModel {
 	}
 
 	@Override
-	public void predictionModel(Matrix state, double dt, Matrix state_delta) {
-		state_delta.data[0][0] = state.data[1][0] * dt;
+	public void predictionModel(Matrix state, Matrix state_delta) {
+		state_delta.data[0][0] = state.data[1][0];
 	}
 
 	@Override
-	public void predictionModelJacobian(Matrix state, double dt, Matrix state_delta_jacobian) {
-		state_delta_jacobian.data[0][1] = dt;
+	public void predictionModelJacobian(Matrix state, Matrix state_delta_jacobian) {
+		state_delta_jacobian.data[0][1] = 1;
 	}
 
 	@Override
-	public void processNoiseCovariance(double dt, Matrix process_noise_covariance) {
-		process_noise_covariance.data[0][0] = dt;
-		process_noise_covariance.data[1][1] = dt;
+	public void processNoiseCovariance(Matrix process_noise_covariance) {
+		process_noise_covariance.data[0][0] = 1;
+		process_noise_covariance.data[1][1] = 1;
 	}
 }

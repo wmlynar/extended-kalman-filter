@@ -47,15 +47,13 @@ public class DKalmanFilter {
 	/* Just the prediction phase of update. */
 	public void predict(double dt) {
 		/* Predict the state */
-		model.predicted_state.zero_matrix();
-		model.predictionModel(model.state_estimate, dt, model.predicted_state);
-		Matrix.add_matrix(model.state_estimate, model.predicted_state, model.predicted_state);
+		model.predictionModel(model.state_estimate, model.delta_vector_scratch);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
 		
 		/* Predict the state estimate covariance */
-		model.state_transition.zero_matrix();
-		model.predictionModelJacobian(model.state_estimate, dt, model.state_transition);
-		Matrix.add_matrix(model.identity_scratch, model.state_transition, model.state_transition);
-		model.processNoiseCovariance(dt, model.process_noise_covariance);
+		model.predictionModelJacobian(model.state_estimate, model.delta_matrix_scratch);
+		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
+		model.processNoiseCovariance(model.process_noise_covariance);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
@@ -73,7 +71,7 @@ public class DKalmanFilter {
 		obs.observationNoiseCovariance(obs.observation_noise_covariance);
 		Matrix.multiply_by_transpose_matrix(model.predicted_estimate_covariance, obs.observation_model, obs.vertical_scratch);
 		Matrix.multiply_matrix(obs.observation_model, obs.vertical_scratch, obs.innovation_covariance);
-		Matrix.add_matrix(obs.innovation_covariance, obs.observation_noise_covariance, obs.innovation_covariance);
+		Matrix.add_scaled_matrix(obs.innovation_covariance, dt, obs.observation_noise_covariance, obs.innovation_covariance);
 
 		/*
 		 * Invert the innovation covariance. Note: this destroys the innovation
