@@ -27,8 +27,8 @@ public abstract class ObservationModel {
 	
 	public abstract int stateDimension();
 	public abstract int observationDimension();
-	public abstract void observationMeasurement(Matrix observation_measured);
-	public abstract void observationModel(Matrix state, Matrix observation_predicted);
-	public abstract void observationModelJacobian(Matrix observation_jacobian);
-	public abstract void observationNoiseCovariance(Matrix observation_noise_covariance);
+	public abstract void observationMeasurement(double[][] z);
+	public abstract void observationModel(double[][] x, double[][] h);
+	public abstract void observationModelJacobian(double[][] j);
+	public abstract void observationNoiseCovariance(double[][] cov);
 }

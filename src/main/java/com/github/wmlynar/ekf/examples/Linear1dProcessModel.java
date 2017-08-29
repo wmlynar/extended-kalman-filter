@@ -11,30 +11,29 @@ public class Linear1dProcessModel extends ProcessModel {
 	}
 
 	@Override
-	public void initialState(Matrix initial_state) {
-		initial_state.data[0][0] = 0;
-		initial_state.data[1][0] = 0;
+	public void initialState(double[][] x) {
+		x[0][0] = 0;
+		x[1][0] = 0;
 	}
 
 	@Override
-	public void initialStateCovariance(Matrix initial_covariance) {
-		initial_covariance.set_identity_matrix();
-		initial_covariance.scale_matrix(1000);
+	public void initialStateCovariance(double[][] cov) {
+		cov[0][0] = 1000;
 	}
 
 	@Override
-	public void stateFunction(Matrix state, Matrix function) {
-		function.data[0][0] = state.data[1][0];
+	public void stateFunction(double[][] x, double[][] f) {
+		f[0][0] = x[1][0];
 	}
 
 	@Override
-	public void stateFunctionJacobian(Matrix state, Matrix function_jacobian) {
-		function_jacobian.data[0][1] = 1;
+	public void stateFunctionJacobian(double[][] x, double[][] j) {
+		j[0][1] = 1;
 	}
 
 	@Override
-	public void processNoiseCovariance(Matrix process_noise_covariance) {
-		process_noise_covariance.data[0][0] = 1;
-		process_noise_covariance.data[1][1] = 1;
+	public void processNoiseCovariance(double[][] cov) {
+		cov[0][0] = 1;
+		cov[1][1] = 1;
 	}
 }

@@ -29,8 +29,8 @@ public class Linear1dModelTest {
         double x = filter.model.state_estimate.data[0][0];
         double v = filter.model.state_estimate.data[1][0];
         
-        assertEquals(10,x,1e-4);
-        assertEquals(1,v,1e-4);
+        assertEquals(10,x,1e-3);
+        assertEquals(1,v,1e-3);
 	}
 
 }

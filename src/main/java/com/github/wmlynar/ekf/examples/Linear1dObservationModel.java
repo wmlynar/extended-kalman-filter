@@ -22,23 +22,23 @@ public class Linear1dObservationModel extends ObservationModel {
 	}
 
 	@Override
-	public void observationMeasurement(Matrix observation_measured) {
-		observation_measured.data[0][0] = x;
+	public void observationMeasurement(double[][] z) {
+		z[0][0] = x;
 	}
 
 	@Override
-	public void observationModel(Matrix state, Matrix observation_predicted) {
-		observation_predicted.data[0][0] = state.data[0][0];
+	public void observationModel(double[][] x, double[][] h) {
+		h[0][0] = x[0][0];
 	}
 
 	@Override
-	public void observationModelJacobian(Matrix observation_jacobian) {
-		observation_jacobian.data[0][0] = 1;
+	public void observationModelJacobian(double[][] j) {
+		j[0][0] = 1;
 	}
 
 	@Override
-	public void observationNoiseCovariance(Matrix observation_noise_covariance) {
-		observation_noise_covariance.set_identity_matrix();
+	public void observationNoiseCovariance(double[][] cov) {
+		cov[0][0] = 1;
 	}
 
 }

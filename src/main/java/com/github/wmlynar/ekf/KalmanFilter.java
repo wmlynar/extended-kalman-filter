@@ -18,8 +18,8 @@ public class KalmanFilter {
 	public KalmanFilter(ProcessModel model) {
 		this.model = model;
 		
-		model.initialState(model.state_estimate);
-		model.initialStateCovariance(model.estimate_covariance);
+		model.initialState(model.state_estimate.data);
+		model.initialStateCovariance(model.estimate_covariance.data);
 		
 		model.identity_scratch.set_identity_matrix();
 	}
@@ -45,13 +45,13 @@ public class KalmanFilter {
 	/* Just the prediction phase of update. */
 	public void predict(double dt) {
 		/* Predict the state */
-		model.stateFunction(model.state_estimate, model.delta_vector_scratch);
+		model.stateFunction(model.state_estimate.data, model.delta_vector_scratch.data);
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
 		
 		/* Predict the state estimate covariance */
-		model.stateFunctionJacobian(model.state_estimate, model.delta_matrix_scratch);
+		model.stateFunctionJacobian(model.state_estimate.data, model.delta_matrix_scratch.data);
 		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
-		model.processNoiseCovariance(model.process_noise_covariance);
+		model.processNoiseCovariance(model.process_noise_covariance.data);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
@@ -61,15 +61,15 @@ public class KalmanFilter {
 		// runge-kutta 2 (explicit midpoint method)
 		
 		/* Predict the state */
-		model.stateFunction(model.state_estimate, model.delta_vector_scratch);
+		model.stateFunction(model.state_estimate.data, model.delta_vector_scratch.data);
 		Matrix.add_scaled_matrix(model.state_estimate, dt/2, model.delta_vector_scratch, model.predicted_state_midpoint);
-		model.stateFunction(model.predicted_state_midpoint, model.delta_vector_scratch);
+		model.stateFunction(model.predicted_state_midpoint.data, model.delta_vector_scratch.data);
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
 
 		/* Predict the state estimate covariance */
-		model.stateFunctionJacobian(model.predicted_state_midpoint, model.delta_matrix_scratch);
+		model.stateFunctionJacobian(model.predicted_state_midpoint.data, model.delta_matrix_scratch.data);
 		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
-		model.processNoiseCovariance(model.process_noise_covariance);
+		model.processNoiseCovariance(model.process_noise_covariance.data);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
@@ -78,13 +78,13 @@ public class KalmanFilter {
 	/* Just the estimation phase of update. */
 	void estimate(double dt, ObservationModel obs) {
 		/* Calculate innovation */
-		obs.observationMeasurement(obs.observation);
-		obs.observationModel(model.predicted_state, obs.innovation);
+		obs.observationMeasurement(obs.observation.data);
+		obs.observationModel(model.predicted_state.data, obs.innovation.data);
 		Matrix.subtract_matrix(obs.observation, obs.innovation, obs.innovation);
 
 		/* Calculate innovation covariance */
-		obs.observationModelJacobian(obs.observation_model);
-		obs.observationNoiseCovariance(obs.observation_noise_covariance);
+		obs.observationModelJacobian(obs.observation_model.data);
+		obs.observationNoiseCovariance(obs.observation_noise_covariance.data);
 		Matrix.multiply_by_transpose_matrix(model.predicted_estimate_covariance, obs.observation_model, obs.vertical_scratch);
 		Matrix.multiply_matrix(obs.observation_model, obs.vertical_scratch, obs.innovation_covariance);
 		Matrix.add_scaled_matrix(obs.innovation_covariance, dt, obs.observation_noise_covariance, obs.innovation_covariance);

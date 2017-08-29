@@ -26,10 +26,10 @@ public abstract class ProcessModel {
 	public Matrix predicted_state_midpoint = new Matrix(stateDimension(), 1);
 	
 	public abstract int stateDimension();
-	public abstract void initialState(Matrix initial_state);
-	public abstract void initialStateCovariance(Matrix initial_covariance);
-	public abstract void stateFunction(Matrix state, Matrix function);
-	public abstract void stateFunctionJacobian(Matrix state, Matrix function_jacobian);
-	public abstract void processNoiseCovariance(Matrix process_noise_covariance);
+	public abstract void initialState(double[][] x);
+	public abstract void initialStateCovariance(double[][] cov);
+	public abstract void stateFunction(double[][] x, double[][] f);
+	public abstract void stateFunctionJacobian(double[][] x, double[][] j);
+	public abstract void processNoiseCovariance(double[][] cov);
 }
 

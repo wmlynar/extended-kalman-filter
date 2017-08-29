@@ -11,38 +11,43 @@ public class SpeedAngleProcessModel extends ProcessModel {
 	}
 
 	@Override
-	public void initialState(Matrix initial_state) {
-		initial_state.data[0][0] = 0;
-		initial_state.data[1][0] = 0;
-		initial_state.data[2][0] = 0;
-		initial_state.data[3][0] = 0;
+	public void initialState(double[][] x) {
+		x[0][0] = 0;
+		x[1][0] = 0;
+		x[2][0] = 0;
+		x[3][0] = 0;
 	}
 
 	@Override
-	public void initialStateCovariance(Matrix initial_covariance) {
-		initial_covariance.set_identity_matrix();
-		initial_covariance.scale_matrix(1000);
+	public void initialStateCovariance(double[][] cov) {
+		cov[0][0] = 1000;
+		cov[1][1] = 1000;
+		cov[2][2] = 1000;
+		cov[3][3] = 1000;
 	}
 
 	@Override
-	public void stateFunction(Matrix state, Matrix function) {
-		function.data[0][0] = state.data[2][0] * Math.sin(state.data[3][0]);
-		function.data[1][0] = state.data[2][0] * Math.cos(state.data[3][0]);
-		function.data[2][0] = 0;
-		function.data[3][0] = 0;
+	public void stateFunction(double[][] x, double[][] f) {
+		f[0][0] = x[2][0] * Math.sin(x[3][0]);
+		f[1][0] = x[2][0] * Math.cos(x[3][0]);
+		f[2][0] = 0;
+		f[3][0] = 0;
 	}
 
 	@Override
-	public void stateFunctionJacobian(Matrix state, Matrix function_jacobian) {
-		function_jacobian.data[0][2] = Math.sin(state.data[3][0]);
-		function_jacobian.data[0][3] = state.data[2][0] * Math.cos(state.data[3][0]);
-		function_jacobian.data[1][2] = Math.cos(state.data[3][0]);
-		function_jacobian.data[1][3] = -state.data[2][0] * Math.sin(state.data[3][0]);
+	public void stateFunctionJacobian(double[][] x, double[][] j) {
+		j[0][2] = Math.sin(x[3][0]);
+		j[0][3] = x[2][0] * Math.cos(x[3][0]);
+		j[1][2] = Math.cos(x[3][0]);
+		j[1][3] = -x[2][0] * Math.sin(x[3][0]);
 	}
 
 	@Override
-	public void processNoiseCovariance(Matrix process_noise_covariance) {
-		process_noise_covariance.set_identity_matrix();
+	public void processNoiseCovariance(double[][] cov) {
+		cov[0][0] = 1;
+		cov[1][1] = 1;
+		cov[2][2] = 1;
+		cov[3][3] = 1;
 	}
 
 }
