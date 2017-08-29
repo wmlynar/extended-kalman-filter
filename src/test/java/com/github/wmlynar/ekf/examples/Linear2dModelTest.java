@@ -32,9 +32,9 @@ public class Linear2dModelTest {
         double vy = filter.model.state_estimate.data[3][0];
         
         assertEquals(10,x,1e-1);
-        assertEquals(1,vx,1e-6);
+        assertEquals(1,vx,1e-5);
         assertEquals(10,y,1e-1);
-        assertEquals(1,vy,1e-6);
+        assertEquals(1,vy,1e-5);
 	}
 
 }
