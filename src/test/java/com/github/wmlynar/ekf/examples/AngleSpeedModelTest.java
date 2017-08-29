@@ -6,8 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.wmlynar.ekf.KalmanFilter;
-import com.github.wmlynar.ekf.examples.SpeedAngleObservationModel;
-import com.github.wmlynar.ekf.examples.SpeedAngleProcessModel;
 
 public class AngleSpeedModelTest {
 

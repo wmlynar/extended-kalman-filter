@@ -1,7 +1,6 @@
 package com.github.wmlynar.ekf.examples;
 
 import com.github.wmlynar.ekf.ProcessModel;
-import com.github.wmlynar.ekf.Matrix;
 
 public class Linear1dProcessModel extends ProcessModel {
 
