@@ -25,6 +25,7 @@ public abstract class DProcessModel {
 	public Matrix identity_scratch = new Matrix(stateDimension(), stateDimension());
 	public Matrix delta_vector_scratch = new Matrix(stateDimension(), 1);
 	public Matrix delta_matrix_scratch = new Matrix(stateDimension(), stateDimension());
+	public Matrix predicted_state_midpoint = new Matrix(stateDimension(), 1);
 	
 	public abstract int stateDimension();
 	public abstract void initialState(Matrix initial_state);

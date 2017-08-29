@@ -58,6 +58,24 @@ public class DKalmanFilter {
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
 	}
+	
+	public void predict_rk2(double dt) {
+		// runge-kutta 2 (explicit midpoint method)
+		
+		/* Predict the state */
+		model.predictionModel(model.state_estimate, model.delta_vector_scratch);
+		Matrix.add_scaled_matrix(model.state_estimate, dt/2, model.delta_vector_scratch, model.predicted_state_midpoint);
+		model.predictionModel(model.predicted_state_midpoint, model.delta_vector_scratch);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
+
+		/* Predict the state estimate covariance */
+		model.predictionModelJacobian(model.predicted_state_midpoint, model.delta_matrix_scratch);
+		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
+		model.processNoiseCovariance(model.process_noise_covariance);
+		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
+		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
+		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
+	}
 
 	/* Just the estimation phase of update. */
 	void estimate(double dt, DObservationModel obs) {
