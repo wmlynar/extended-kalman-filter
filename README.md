@@ -19,5 +19,12 @@ Observation equation is defined as follows
 
 where in our example we are observing position so h is defined as
 
-![equation](https://latex.codecogs.com/gif.latex?\mathbf{h}=\left[ x\right])
+![equation](https://latex.codecogs.com/gif.latex?%5Cmathbf%7Bh%7D%3D%5Cleft%5Bx%5Cright%5D)
+
+In this simple example functions f and h are linear. The library is written for general non-linear case. That is why we need to provide jacobians of f and h functions
+
+https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bf%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D0%261%5C%5C0%260%5Cend%7Barray%7D%5Cright%5D
+
+https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bh%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D1%260%5Cend%7Barray%7D%5Cright%5D
+
 
