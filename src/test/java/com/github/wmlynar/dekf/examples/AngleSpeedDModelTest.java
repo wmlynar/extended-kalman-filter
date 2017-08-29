@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.github.wmlynar.dekf.DKalmanFilter;
 
-public class AngleSpeedCtModelTest {
+public class AngleSpeedDModelTest {
 
 	@Before
 	public void setUp() throws Exception {
