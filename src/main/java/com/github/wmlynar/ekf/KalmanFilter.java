@@ -14,6 +14,8 @@ package com.github.wmlynar.ekf;
 public class KalmanFilter {
 
 	public double time = 0;
+	public double minimalTimeStep = Double.MAX_VALUE;
+	
 	public ProcessModel model;
 
 	public KalmanFilter(ProcessModel model) {
@@ -23,6 +25,10 @@ public class KalmanFilter {
 		model.initialStateCovariance(model.estimate_covariance.data);
 		
 		model.identity_scratch.set_identity_matrix();
+	}
+
+	public void setMinimalTimeStep(double minimalTimeStep) {
+		this.minimalTimeStep = minimalTimeStep;
 	}
 
 	/*
@@ -42,7 +48,7 @@ public class KalmanFilter {
 		double dt = t - time;
 		time = t;
 		predict(dt);
-		estimate(dt, obs);
+		estimate(obs);
 	}
 
 	/* Just the prediction phase of update. */
@@ -79,7 +85,7 @@ public class KalmanFilter {
 	}
 
 	/* Just the estimation phase of update. */
-	void estimate(double dt, ObservationModel obs) {
+	void estimate(ObservationModel obs) {
 		/* Calculate innovation */
 		obs.observationMeasurement(obs.observation.data);
 		obs.observationModel(model.predicted_state.data, obs.innovation.data);
@@ -90,7 +96,7 @@ public class KalmanFilter {
 		obs.observationNoiseCovariance(obs.observation_noise_covariance.data);
 		Matrix.multiply_by_transpose_matrix(model.predicted_estimate_covariance, obs.observation_model, obs.vertical_scratch);
 		Matrix.multiply_matrix(obs.observation_model, obs.vertical_scratch, obs.innovation_covariance);
-		Matrix.add_scaled_matrix(obs.innovation_covariance, dt, obs.observation_noise_covariance, obs.innovation_covariance);
+		Matrix.add_matrix(obs.innovation_covariance, obs.observation_noise_covariance, obs.innovation_covariance);
 
 		/*
 		 * Invert the innovation covariance. Note: this destroys the innovation
