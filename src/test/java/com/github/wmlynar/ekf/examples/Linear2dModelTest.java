@@ -22,7 +22,7 @@ public class Linear2dModelTest {
         for (int i = 0; i <= 10; ++i) {
         	double time = i;
         	obs.setPosition(i,i);
-            filter.update(i,obs);
+            filter.update(time,obs);
         }
         
         double x = filter.model.state_estimate.data[0][0];
