@@ -19,6 +19,10 @@ public abstract class ProcessModel {
 	public Matrix predicted_state_midpoint = new Matrix(stateDimension(), 1);
 	public Matrix state_delta_scratch = new Matrix(stateDimension(), 1);
 	
+	public ProcessModel() {
+		identity_scratch.set_identity_matrix();
+	}
+	
 	public abstract int stateDimension();
 	public abstract void initialState(double[][] x);
 	public abstract void initialStateCovariance(double[][] cov);

@@ -23,8 +23,6 @@ public class KalmanFilter {
 		
 		model.initialState(model.state_estimate.data);
 		model.initialStateCovariance(model.estimate_covariance.data);
-		
-		model.identity_scratch.set_identity_matrix();
 	}
 
 	public void setMaximalTimeStep(double maximalTimeStep) {
