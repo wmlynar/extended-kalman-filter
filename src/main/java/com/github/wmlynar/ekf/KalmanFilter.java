@@ -50,7 +50,7 @@ public class KalmanFilter {
 			if(dt>maximalTimeStep) {
 				dt = maximalTimeStep;
 			}
-			predict(dt);
+			predict_rk2(dt);
 			time += dt;
 		} while(time<t);
 		estimate(obs);
@@ -64,7 +64,7 @@ public class KalmanFilter {
 		model.processNoiseCovariance(model.process_noise_covariance.data);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
-		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
+		Matrix.add_scaled_matrix(model.predicted_estimate_covariance, dt, model.process_noise_covariance, model.predicted_estimate_covariance);
 		Matrix.copy_matrix(model.predicted_estimate_covariance, model.estimate_covariance);
 		
 		/* Predict the state */
@@ -83,7 +83,7 @@ public class KalmanFilter {
 		model.processNoiseCovariance(model.process_noise_covariance.data);
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
-		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
+		Matrix.add_scaled_matrix(model.predicted_estimate_covariance, dt, model.process_noise_covariance, model.predicted_estimate_covariance);
 		Matrix.copy_matrix(model.predicted_estimate_covariance, model.estimate_covariance);
 		
 		/* Predict the state */
