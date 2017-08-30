@@ -3,7 +3,7 @@ Extended Kalman Filter implemented in Java with easy representation of model and
 
 # One-dimensional example of moving object
 
-Let's start with simple example of object moving in one dimension. Object has position x and velocity v. Object starts at unknown position and unknown velocity. Object is being observed at time intervals i=0,1..10 at positions x0=0, x1=1, ... x10=10. The task is to estimate the position and velocity at time i=10.
+Let's start with simple example of object moving in one dimension. Object has position x and velocity v. Object starts at unknown position and unknown velocity. Object is being observed at time points i=0,1..10 at positions y0=0, y1=1, ... y10=10. The task is to estimate the position and velocity at time i=10.
 
 State equation is defined as follows
 
@@ -17,7 +17,7 @@ where state vector x and system function f are defined as
 
 In this simple example function f is linear. Nevertheless the library is written for general non-linear Extended Kalman Filter case. That is why we need to provide jacobian of f
 
-![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bf%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D0%261%5C%5C0%260%5Cend%7Barray%7D%5Cright%5D)
+![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20%5Cmathbf%7Bf%7D%7D%7B%5Cpartial%20%5Cmathbf%7Bx%7D%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D0%261%5C%5C0%260%5Cend%7Barray%7D%5Cright%5D)
 
 In Java the above formulas can be provided by subclassing the ProcessModel class:
 
