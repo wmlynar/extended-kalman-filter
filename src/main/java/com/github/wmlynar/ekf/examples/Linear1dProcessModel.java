@@ -44,4 +44,12 @@ public class Linear1dProcessModel extends ProcessModel {
 		cov[1][0] = 0;
 		cov[1][1] = 1;
 	}
+	
+	public double getX() {
+		return getState()[0][0];
+	}
+
+	public double getV() {
+		return getState()[1][0];
+	}
 }

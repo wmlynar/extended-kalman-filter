@@ -23,6 +23,10 @@ public abstract class ProcessModel {
 		identity_scratch.set_identity_matrix();
 	}
 	
+	public double[][] getState() {
+		return state_estimate.data;
+	}
+	
 	public abstract int stateDimension();
 	public abstract void initialState(double[][] x);
 	public abstract void initialStateCovariance(double[][] cov);

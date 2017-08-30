@@ -2,16 +2,11 @@ package com.github.wmlynar.ekf.examples;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import com.github.wmlynar.ekf.KalmanFilter;
 
 public class Linear1dModelTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void test() {
@@ -25,11 +20,10 @@ public class Linear1dModelTest {
             filter.update(time,obs);
         }
         
-        double x = filter.model.state_estimate.data[0][0];
-        double v = filter.model.state_estimate.data[1][0];
+        double x = model.getState()[0][0];
+        double v = model.getState()[0][1];
         
         assertEquals(10,x,1e-3);
         assertEquals(1,v,1e-3);
 	}
-
 }
