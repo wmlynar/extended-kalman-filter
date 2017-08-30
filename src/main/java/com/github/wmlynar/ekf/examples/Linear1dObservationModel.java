@@ -5,11 +5,11 @@ import com.github.wmlynar.ekf.ObservationModel;
 public class Linear1dObservationModel extends ObservationModel {
 
 	private double mx;
-	
+
 	public void setPosition(double x) {
 		this.mx = x;
 	}
-	
+
 	@Override
 	public int observationDimension() {
 		return 1;

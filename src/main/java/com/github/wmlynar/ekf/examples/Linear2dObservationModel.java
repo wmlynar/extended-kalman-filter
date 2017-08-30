@@ -6,12 +6,12 @@ public class Linear2dObservationModel extends ObservationModel {
 
 	private double mx;
 	private double my;
-	
+
 	public void setPosition(double x, double y) {
 		this.mx = x;
 		this.my = y;
 	}
-	
+
 	@Override
 	public int observationDimension() {
 		return 2;

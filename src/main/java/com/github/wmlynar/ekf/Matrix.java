@@ -57,8 +57,9 @@ public class Matrix {
 	public void print_matrix() {
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < cols; ++j) {
-				if (j > 0)
+				if (j > 0) {
 					System.out.print(" ");
+				}
 				System.out.format("%6.2f", data[i][j]);
 			}
 			System.out.print("\n");
@@ -164,8 +165,9 @@ public class Matrix {
 		assert (a.cols == b.cols);
 		for (int i = 0; i < a.rows; ++i) {
 			for (int j = 0; j < a.cols; ++j) {
-				if (Math.abs(a.data[i][j] - b.data[i][j]) > tolerance)
+				if (Math.abs(a.data[i][j] - b.data[i][j]) > tolerance) {
 					return false;
+				}
 			}
 		}
 		return true;
@@ -198,8 +200,9 @@ public class Matrix {
 	 */
 	public void scale_row(int r, double scalar) {
 		assert (scalar != 0.0);
-		for (int i = 0; i < cols; ++i)
+		for (int i = 0; i < cols; ++i) {
 			data[r][i] *= scalar;
+		}
 	}
 
 	/*
@@ -209,8 +212,9 @@ public class Matrix {
 	/* Add scalar * row r2 to row r1. */
 	public void shear_row(int r1, int r2, double scalar) {
 		assert (r1 != r2);
-		for (int i = 0; i < cols; ++i)
+		for (int i = 0; i < cols; ++i) {
 			data[r1][i] += scalar * data[r2][i];
+		}
 	}
 
 	/*
@@ -247,8 +251,9 @@ public class Matrix {
 				/* We must swap rows to get a nonzero diagonal element. */
 				int r;
 				for (r = i + 1; r < input.rows; ++r) {
-					if (input.data[r][i] != 0.0)
+					if (input.data[r][i] != 0.0) {
 						break;
+					}
 				}
 				if (r == input.rows) {
 					/*
@@ -271,8 +276,9 @@ public class Matrix {
 
 			/* Zero out the other elements in this column. */
 			for (int j = 0; j < input.rows; ++j) {
-				if (i == j)
+				if (i == j) {
 					continue;
+				}
 				double shear_needed = -input.data[j][i];
 				input.shear_row(j, i, shear_needed);
 				output.shear_row(j, i, shear_needed);
@@ -281,7 +287,7 @@ public class Matrix {
 
 		return true;
 	}
-	
+
 	public void zero_matrix() {
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < cols; ++j) {
@@ -289,7 +295,7 @@ public class Matrix {
 			}
 		}
 	}
-	
+
 	public static void add_scaled_matrix(Matrix a, double s, Matrix b, Matrix c) {
 		assert (a.rows == b.rows);
 		assert (a.rows == c.rows);
