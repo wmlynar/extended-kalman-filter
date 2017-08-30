@@ -14,7 +14,7 @@ package com.github.wmlynar.ekf;
 public class KalmanFilter {
 
 	public double time = 0;
-	public double minimalTimeStep = Double.MAX_VALUE;
+	public double maximalTimeStep = Double.MAX_VALUE;
 	
 	public ProcessModel model;
 
@@ -27,8 +27,8 @@ public class KalmanFilter {
 		model.identity_scratch.set_identity_matrix();
 	}
 
-	public void setMinimalTimeStep(double minimalTimeStep) {
-		this.minimalTimeStep = minimalTimeStep;
+	public void setMaximalTimeStep(double maximalTimeStep) {
+		this.maximalTimeStep = maximalTimeStep;
 	}
 
 	/*
@@ -45,9 +45,14 @@ public class KalmanFilter {
 	 * f.state_estimate f.estimate_covariance
 	 */
 	public void update(double t, ObservationModel obs) {
-		double dt = t - time;
-		time = t;
-		predict(dt);
+		while(time<t) {
+			double dt = t - time;
+			if(dt>maximalTimeStep) {
+				dt = maximalTimeStep;
+			}
+			predict(dt);
+			time += dt;
+		}
 		estimate(obs);
 	}
 
@@ -64,6 +69,9 @@ public class KalmanFilter {
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
+
+		Matrix.copy_matrix(model.predicted_state, model.state_estimate);
+		Matrix.copy_matrix(model.predicted_estimate_covariance, model.estimate_covariance);
 	}
 	
 	public void predict_rk2(double dt) {
@@ -82,6 +90,9 @@ public class KalmanFilter {
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
+
+		Matrix.copy_matrix(model.predicted_state, model.state_estimate);
+		Matrix.copy_matrix(model.predicted_estimate_covariance, model.estimate_covariance);
 	}
 
 	/* Just the estimation phase of update. */
