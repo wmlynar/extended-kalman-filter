@@ -20,7 +20,7 @@ public class Linear1dModelTest {
 		}
 
 		double x = model.getState()[0][0];
-		double v = model.getState()[0][1];
+		double v = model.getState()[1][0];
 
 		Assert.assertEquals(10, x, 1e-3);
 		Assert.assertEquals(1, v, 1e-3);
