@@ -9,9 +9,6 @@ public abstract class ProcessModel {
 	public Matrix process_noise_covariance = new Matrix(stateDimension(), stateDimension());
 	
 	/* This group of matrices are updated every time step by the filter. */
-	/* x-hat_k|k-1 */
-	public Matrix predicted_state = new Matrix(stateDimension(), 1);
-	/* P_k|k-1 */
 	public Matrix predicted_estimate_covariance = new Matrix(stateDimension(), stateDimension());
 	/* x-hat_k|k */
 	public Matrix state_estimate = new Matrix(stateDimension(), 1);

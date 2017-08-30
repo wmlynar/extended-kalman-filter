@@ -69,19 +69,14 @@ public class KalmanFilter {
 		
 		/* Predict the state */
 		model.stateFunction(model.state_estimate.data, model.delta_vector_scratch.data);
-		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
-		Matrix.copy_matrix(model.predicted_state, model.state_estimate);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.state_estimate);
 	}
 	
 	public void predict_rk2(double dt) {
 		// runge-kutta 2 (explicit midpoint method)
-		
-		/* Predict the state */
 		model.stateFunction(model.state_estimate.data, model.delta_vector_scratch.data);
 		Matrix.add_scaled_matrix(model.state_estimate, dt/2, model.delta_vector_scratch, model.predicted_state_midpoint);
-		model.stateFunction(model.predicted_state_midpoint.data, model.delta_vector_scratch.data);
-		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.predicted_state);
-
+		
 		/* Predict the state estimate covariance */
 		model.stateFunctionJacobian(model.predicted_state_midpoint.data, model.delta_matrix_scratch.data);
 		Matrix.add_scaled_matrix(model.identity_scratch, dt, model.delta_matrix_scratch, model.state_transition);
@@ -89,16 +84,18 @@ public class KalmanFilter {
 		Matrix.multiply_matrix(model.state_transition, model.estimate_covariance, model.big_square_scratch);
 		Matrix.multiply_by_transpose_matrix(model.big_square_scratch, model.state_transition, model.predicted_estimate_covariance);
 		Matrix.add_matrix(model.predicted_estimate_covariance, model.process_noise_covariance, model.predicted_estimate_covariance);
-
-		Matrix.copy_matrix(model.predicted_state, model.state_estimate);
 		Matrix.copy_matrix(model.predicted_estimate_covariance, model.estimate_covariance);
+		
+		/* Predict the state */
+		model.stateFunction(model.predicted_state_midpoint.data, model.delta_vector_scratch.data);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.delta_vector_scratch, model.state_estimate);
 	}
 
 	/* Just the estimation phase of update. */
 	void estimate(ObservationModel obs) {
 		/* Calculate innovation */
 		obs.observationMeasurement(obs.observation.data);
-		obs.observationModel(model.predicted_state.data, obs.innovation.data);
+		obs.observationModel(model.state_estimate.data, obs.innovation.data);
 		Matrix.subtract_matrix(obs.observation, obs.innovation, obs.innovation);
 
 		/* Calculate innovation covariance */
@@ -121,8 +118,8 @@ public class KalmanFilter {
 		Matrix.multiply_matrix(obs.vertical_scratch, obs.inverse_innovation_covariance, obs.optimal_gain);
 
 		/* Estimate the state */
-		Matrix.multiply_matrix(obs.optimal_gain, obs.innovation, model.state_estimate);
-		Matrix.add_matrix(model.state_estimate, model.predicted_state, model.state_estimate);
+		Matrix.multiply_matrix(obs.optimal_gain, obs.innovation, model.delta_vector_scratch);
+		Matrix.add_matrix(model.state_estimate, model.delta_vector_scratch, model.state_estimate);
 
 		/* Estimate the state covariance */
 		Matrix.multiply_matrix(obs.optimal_gain, obs.observation_model, model.big_square_scratch);
