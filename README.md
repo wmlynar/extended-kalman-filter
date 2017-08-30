@@ -3,7 +3,7 @@ Extended Kalman Filter implemented in Java with easy representation of model and
 
 # One-dimensional example of moving object
 
-Let's start with simple example of object moving in one dimension. Object has position x and velocity v. Object starts at unknown position and unknown velocity. Object is being observed at time points i=0,1..10 at positions y0=0, y1=1, ... y10=10. The task is to estimate the position and velocity at time i=10.
+Let's start with a simple example of object that is moving in one dimension. Object has position x and velocity v. Object starts at unknown position and unknown velocity. Object is being observed at time points i=0,1..10 at positions y0=0, y1=1, ... y10=10. The task is to estimate the position and velocity at time i=10.
 
 State equation is defined as follows
 
