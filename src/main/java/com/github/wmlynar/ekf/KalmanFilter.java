@@ -48,7 +48,7 @@ public class KalmanFilter {
 			if (dt > maximalTimeStep) {
 				dt = maximalTimeStep;
 			}
-			predict_rk2(dt);
+			predict(dt);
 			time += dt;
 		} while (time < t);
 		estimate(obs);
@@ -71,6 +71,7 @@ public class KalmanFilter {
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.state_function, model.state_estimate);
 	}
 
+	// unfortunately there is no observable improvement
 	public void predict_rk2(double dt) {
 		// runge-kutta 2 (explicit midpoint method)
 		model.stateFunction(model.state_estimate.data, model.state_function.data);
@@ -91,7 +92,7 @@ public class KalmanFilter {
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.state_function, model.state_estimate);
 	}
 
-	/* Just the prediction phase of update. */
+	// this requires a lot of iterations (step size 0.001)
 	public void predict_continuous(double dt) {
 		/* Predict the state estimate covariance */
 		model.stateFunctionJacobian(model.state_estimate.data, model.state_jacobian.data);
@@ -107,6 +108,29 @@ public class KalmanFilter {
 
 		/* Predict the state */
 		model.stateFunction(model.state_estimate.data, model.state_function.data);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.state_function, model.state_estimate);
+	}
+
+	// this requires a lot of iterations (step size 0.001)
+	public void predict_continuous_rk2(double dt) {
+		// runge-kutta 2 (explicit midpoint method)
+		model.stateFunction(model.state_estimate.data, model.state_function.data);
+		Matrix.add_scaled_matrix(model.state_estimate, dt / 2, model.state_function, model.predicted_state_midpoint);
+
+		/* Predict the state estimate covariance */
+		model.stateFunctionJacobian(model.predicted_state_midpoint.data, model.state_jacobian.data);
+		Matrix.multiply_matrix(model.state_jacobian, model.estimate_covariance, model.big_square_scratch);
+		Matrix.multiply_by_transpose_matrix(model.estimate_covariance, model.state_jacobian, model.big_square_scratch2);
+		Matrix.add_matrix(model.big_square_scratch, model.big_square_scratch2, model.big_square_scratch);
+		
+		model.processNoiseCovariance(model.process_noise_covariance.data);
+		Matrix.add_matrix(model.big_square_scratch, model.process_noise_covariance, model.big_square_scratch);
+
+		Matrix.add_scaled_matrix(model.estimate_covariance, dt, model.big_square_scratch,
+				model.estimate_covariance);
+
+		/* Predict the state */
+		model.stateFunction(model.predicted_state_midpoint.data, model.state_function.data);
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.state_function, model.state_estimate);
 	}
 
