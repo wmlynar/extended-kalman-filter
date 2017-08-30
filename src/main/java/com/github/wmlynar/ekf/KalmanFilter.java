@@ -45,14 +45,14 @@ public class KalmanFilter {
 	 * f.state_estimate f.estimate_covariance
 	 */
 	public void update(double t, ObservationModel obs) {
-		while(time<t) {
+		do {
 			double dt = t - time;
 			if(dt>maximalTimeStep) {
 				dt = maximalTimeStep;
 			}
 			predict(dt);
 			time += dt;
-		}
+		} while(time<t);
 		estimate(obs);
 	}
 

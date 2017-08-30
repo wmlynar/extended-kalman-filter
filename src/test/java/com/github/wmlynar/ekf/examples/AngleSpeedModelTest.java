@@ -18,6 +18,7 @@ public class AngleSpeedModelTest {
 		SpeedAngleProcessModel model = new SpeedAngleProcessModel();
 		SpeedAngleObservationModel obs = new SpeedAngleObservationModel();
 		KalmanFilter filter = new KalmanFilter(model);
+		filter.setMaximalTimeStep(0.5);
 		
         for (int i = 0; i <= 10; ++i) {
         	double time = i;
