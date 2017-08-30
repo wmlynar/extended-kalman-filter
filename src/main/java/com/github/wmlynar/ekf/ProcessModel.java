@@ -27,6 +27,10 @@ public abstract class ProcessModel {
 		return state_estimate.data;
 	}
 
+	public double[][] getCovariance() {
+		return estimate_covariance.data;
+	}
+
 	public abstract int stateDimension();
 
 	public abstract void initialState(double[][] x);
