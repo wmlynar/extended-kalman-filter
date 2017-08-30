@@ -91,6 +91,25 @@ public class KalmanFilter {
 		Matrix.add_scaled_matrix(model.state_estimate, dt, model.state_function, model.state_estimate);
 	}
 
+	/* Just the prediction phase of update. */
+	public void predict_continuous(double dt) {
+		/* Predict the state estimate covariance */
+		model.stateFunctionJacobian(model.state_estimate.data, model.state_jacobian.data);
+		Matrix.multiply_matrix(model.state_jacobian, model.estimate_covariance, model.big_square_scratch);
+		Matrix.multiply_by_transpose_matrix(model.estimate_covariance, model.state_jacobian, model.big_square_scratch2);
+		Matrix.add_matrix(model.big_square_scratch, model.big_square_scratch2, model.big_square_scratch);
+		
+		model.processNoiseCovariance(model.process_noise_covariance.data);
+		Matrix.add_matrix(model.big_square_scratch, model.process_noise_covariance, model.big_square_scratch);
+
+		Matrix.add_scaled_matrix(model.estimate_covariance, dt, model.big_square_scratch,
+				model.estimate_covariance);
+
+		/* Predict the state */
+		model.stateFunction(model.state_estimate.data, model.state_function.data);
+		Matrix.add_scaled_matrix(model.state_estimate, dt, model.state_function, model.state_estimate);
+	}
+
 	/* Just the estimation phase of update. */
 	void estimate(ObservationModel obs) {
 		/* Calculate innovation */
