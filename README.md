@@ -78,7 +78,7 @@ where in our example we are observing position so h is defined as
 
 Jacobian of function h is computed as
 
-![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%5Cmathbf%7Bh%7D%7D%7B%5Cpartial%20x%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D1%260%5Cend%7Barray%7D%5Cright%5D)
+![equation](https://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20%5Cmathbf%7Bh%7D%7D%7B%5Cpartial%20%5Cmathbf%7Bx%7D%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcc%7D1%260%5Cend%7Barray%7D%5Cright%5D)
 
 Above formulas are implemented in Java by subclassing the ObservationModel:
 
