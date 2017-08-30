@@ -3,7 +3,7 @@ Extended Kalman Filter implemented in Java with easy representation of model and
 
 # One-dimensional example of moving object
 
-Let's start with a simple example of object that is moving in one dimension. Object has position x and velocity v. Object starts at unknown position and unknown velocity. Object is being observed at time points i=0,1..10 at positions y0=0, y1=1, ... y10=10. The task is to estimate the position and velocity at time i=10.
+Let's start with a simple example of object which is moving in one dimension. Object has position x and velocity v. Object starts at unknown position and unknown velocity. Object is being observed at time points i=0,1..10 at positions y0=0, y1=1, ... y10=10. The task is to estimate the position and velocity at time i=10.
 
 # Defining state equations
 
@@ -66,7 +66,7 @@ public class Linear1dProcessModel extends ProcessModel {
 		cov[1][0] = 0;
 		cov[1][1] = 1;
 	}
-	
+
 	public double getX() {
 		return getState()[0][0];
 	}
@@ -99,11 +99,11 @@ Above formulas are implemented in Java by subclassing the ObservationModel:
 public class Linear1dObservationModel extends ObservationModel {
 
 	private double mx;
-	
+
 	public void setPosition(double x) {
 		this.mx = x;
 	}
-	
+
 	@Override
 	public int observationDimension() {
 		return 1;
@@ -139,7 +139,7 @@ public class Linear1dObservationModel extends ObservationModel {
 
 # Running the code
 
-Following code uses both model and Kalman filter
+Below code shows how to use defined process model, observation model and Kalman filter to compute estimates of position and velocity at particular time
 
 ```
 public class Linear1dModelTest {
@@ -149,20 +149,19 @@ public class Linear1dModelTest {
 		Linear1dProcessModel model = new Linear1dProcessModel();
 		Linear1dObservationModel obs = new Linear1dObservationModel();
 		KalmanFilter filter = new KalmanFilter(model);
-		
-        for (int i = 0; i <= 10; ++i) {
-        	double time = i;
-        	obs.setPosition(i);
-            filter.update(time,obs);
-        }
-        
-        double x = model.getState()[0][0];
-        double v = model.getState()[0][1];
-        
-        assertEquals(10,x,1e-3);
-        assertEquals(1,v,1e-3);
+
+		for (int i = 0; i <= 10; ++i) {
+			double time = i;
+			obs.setPosition(i);
+			filter.update(time, obs);
+		}
+
+		double x = model.getState()[0][0];
+		double v = model.getState()[0][1];
+
+		Assert.assertEquals(10, x, 1e-3);
+		Assert.assertEquals(1, v, 1e-3);
 	}
 }
 ```
-
 
