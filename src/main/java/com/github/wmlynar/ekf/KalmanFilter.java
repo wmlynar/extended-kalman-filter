@@ -48,7 +48,7 @@ public class KalmanFilter {
 			if (dt > maximalTimeStep) {
 				dt = maximalTimeStep;
 			}
-			predict_rk2(dt);
+			predict(dt);
 			time += dt;
 		} while (time < t);
 		estimate(obs);
