@@ -27,8 +27,28 @@ public abstract class ProcessModel {
 		return state_estimate.data;
 	}
 
+	public double getState(int state) {
+		return state_estimate.data[state][0];
+	}
+
+	public void setState(int state, double v) {
+		state_estimate.data[state][0] = v;
+	}
+
 	public double[][] getCovariance() {
 		return estimate_covariance.data;
+	}
+
+	public double getCovariance(int state) {
+		return estimate_covariance.data[state][0];
+	}
+
+	public void setCovarianceClearRowCol(int state, double v) {
+		for(int i=0; i<estimate_covariance.data.length; i++) {
+			estimate_covariance.data[state][i] = 0;
+			estimate_covariance.data[i][state] = 0;
+		}
+		estimate_covariance.data[state][state] = v;
 	}
 
 	public abstract int stateDimension();
