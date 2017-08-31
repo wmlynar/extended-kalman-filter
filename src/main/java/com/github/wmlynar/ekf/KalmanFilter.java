@@ -140,7 +140,7 @@ public class KalmanFilter {
 		Matrix.subtract_matrix(obs.observation, obs.innovation, obs.innovation);
 
 		/* Calculate innovation covariance */
-		obs.observationModelJacobian(obs.observation_model.data);
+		obs.observationModelJacobian(model.state_estimate.data, obs.observation_model.data);
 		obs.observationNoiseCovariance(obs.observation_noise_covariance.data);
 		Matrix.multiply_by_transpose_matrix(model.estimate_covariance, obs.observation_model, obs.vertical_scratch);
 		Matrix.multiply_matrix(obs.observation_model, obs.vertical_scratch, obs.innovation_covariance);

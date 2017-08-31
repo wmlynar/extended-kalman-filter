@@ -33,7 +33,7 @@ public abstract class ObservationModel {
 
 	public abstract void observationModel(double[][] x, double[][] h);
 
-	public abstract void observationModelJacobian(double[][] j);
+	public abstract void observationModelJacobian(double[][] x, double[][] j);
 
 	public abstract void observationNoiseCovariance(double[][] cov);
 }

@@ -31,7 +31,7 @@ public class Linear1dObservationModel extends ObservationModel {
 	}
 
 	@Override
-	public void observationModelJacobian(double[][] j) {
+	public void observationModelJacobian(double[][] x, double[][] j) {
 		j[0][0] = 1;
 		j[0][1] = 0;
 	}
